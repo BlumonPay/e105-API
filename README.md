@@ -1,6 +1,6 @@
 # Blumon Pay e105-API
 
-SDK para integración con el dispositivo e105 de Verifone.
+SDK para integración con el dispositivo e105 de Verifone y transacciones electrónicas con Blumon Pay.
 Para transaccionar con Blumon Pay se requiere de solicitar una alta de usuario al correo: helloworld@blumonpay.com
 
 ## Integración utilizando Android Studio (Java)
@@ -9,13 +9,17 @@ Para comenzar la integración se tiene que crear un proyecto nuevo en Android St
 - Versión de compilación: 23
 - Versión mímina de SDK: 14
 
-Para importar el .aar, se selecciona File->New->New Module
-Seleccionar Import .JAR / .AAR Package
-Y se selecciona el .aar de Blumon Pay
+Importar el .aar
+    Selecciona File->New->New Module
+    Import .JAR / .AAR Package
+    Selecciona el .aar de Blumon Pay
 
-Cofiguración de Gradle:
+Importar librerías nativas de android:
+ - armeabi
+ - armeabi-v7a
 
-```json
+Cofiguración de Gradle (app.gradle):
+```gradle
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -38,7 +42,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':BlumonPayLibrary')
+    compile project(':BlumonPayLibrary-release')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
@@ -59,7 +63,17 @@ task nativeLibsToJar(type: Zip, description: 'create a jar archive of the native
 tasks.withType(JavaCompile) {
     compileTask -> compileTask.dependsOn(nativeLibsToJar)
 }
-
 ```
 
-....
+Permisos de aplicación (AndroidManifest.xml):
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+Interfaces a utilizar:
+
+Paquete | Clase | Métodos
+--- | --- | ---
+app.blumon.com.Login.LoginListener | LoginListener | void startLogin(); void endLogin(boolean status, int code, String message); void processingMessage(int code, String message);
