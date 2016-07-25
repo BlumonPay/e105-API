@@ -10,15 +10,15 @@ Para comenzar la integración se tiene que crear un proyecto nuevo en Android St
 - Versión mímina de SDK: 14
 
 Importar el .aar
-    Selecciona File->New->New Module
-    Import .JAR / .AAR Package
-    Selecciona el .aar de Blumon Pay
+    <br>&nbsp;&nbsp;Selecciona File->New->New Module
+    <br>&nbsp;&nbsp;Import .JAR / .AAR Package
+    <br>&nbsp;&nbsp;Selecciona el .aar de Blumon Pay
 
 Importar librerías nativas de android:
  - armeabi
  - armeabi-v7a
 
-Cofiguración de Gradle (app.gradle):
+###Cofiguración de Gradle (app.gradle):
 ```gradle
 android {
     compileSdkVersion 23
@@ -65,15 +65,99 @@ tasks.withType(JavaCompile) {
 }
 ```
 
-Permisos de aplicación (AndroidManifest.xml):
+###Permisos de aplicación (AndroidManifest.xml):
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
-Interfaces a utilizar:
+###Interfaces a utilizar:
 
-Paquete | Clase | Métodos
---- | --- | ---
-app.blumon.com.Login.LoginListener | LoginListener | void startLogin(); void endLogin(boolean status, int code, String message); void processingMessage(int code, String message);
+####Login
+Paquete: app.blumon.com.Login.LoginListener
+<br>Clase: LoginListener
+<br>Métodos: 
+```java
+void startLogin();
+void endLogin(boolean status, int code, String message);
+void processingMessage(int code, String message);
+```
+
+####Transacción
+Paquete: app.blumon.com.Transaction
+<br>Clase: Transaction.PreTransactionListener
+<br>Métodos:
+```java
+void startPreTransaction(String message);
+void endPreTransaction(boolean status, int code, String message);
+void readingCard(String message);
+void slideInsertCard(String message);
+void slideCardMagnetic(String message);
+void processingMessage(int code, String message);
+void connectionStatus(boolean status);
+```
+####Cancelación
+Paquete: app.blumon.com.Cancellation
+<br>Clase: Cancellation.CancellationListener
+<br>Métodos:
+```java
+void startCancellation(String message);
+void endCancellation(boolean status, int code, String message);
+void readingCard(String message);
+void slideInsertCard(String message);
+void slideCardMagnetic(String message);
+void processingMessage(int code, String message);
+void connectionStatus(boolean status);
+```
+
+####Información del dispositivo
+Paquete: app.blumon.com.model.DeviceInformation
+<br>Clase: Information.InformationListener
+<br>Métodos:
+```java
+void startGettingInformation();
+void endGettingInformation(boolean status, int code, String message, DeviceInformation deviceInformation);
+void processingMessage(int code, String message);
+```
+
+####Base de datos
+Paquete: app.blumon.com.model.db.BlumonpayDataSource
+<br>Métodos:
+```java
+// Constructor
+BlumonpayDataSource(Context context);
+
+// Métodos de Lectura
+ServerResponse readLogin();
+FirstSession readFirstSession();
+
+// Métodos de borrar
+void deleteLogin();
+void deleteFirstSession();
+```
+<br>Uso:
+```java
+BlumonpayDataSource dataSource = new BlumonpayDataSource(Activity);
+// Información de Login
+ServerResponse loginData = dataSource.readLogin();
+// Información de primera sesión del dispositivo
+FirstSession firstsession = dataSource.readFirstSession();
+```
+
+####Objeto Login
+Parámetro | Descripción
+--- | ---
+nb_branch | Nombre de la sucursal.
+id_branch | Identificador de la sucursal.
+nb_company | Nombre de la compañía que realizó la transacción.
+id_company | Identificador de la empresa.
+nb_street | Domicilio del comercio.
+ticket_foot | Pie de Ticket que se imprime.
+ticket_header | Encabezado del ticket.
+logo | Url del logotipo personalizado.
+username | Nombre del usuario.
+fingerprint | Huella de dispositivo.
+menu | Opciones de menú.
+submenu | Opciones del submenú.
+mail | E-mail del comercio.
