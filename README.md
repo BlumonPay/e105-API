@@ -17,6 +17,7 @@ Importar el .aar
 Importar librerías nativas de android:
  - armeabi
  - armeabi-v7a
+ - native-libs.jar
 
 ###Cofiguración de Gradle (app.gradle):
 ```gradle
@@ -42,6 +43,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
     compile project(':BlumonPayLibrary-release')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
