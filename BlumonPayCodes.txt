@@ -1,0 +1,60 @@
+Error codes:
+
+0000: Autorizado
+0001: message (Unauthorized)
+0002: error_message (Server error)
+0003: Failed to initialize device.
+0004: Unsupported device for e105 reader.
+0005: Device connection timeout.
+0006: Failed to get device information.
+0007: Pretransaction failed.
+0008: Couldn't get license.
+0009: Couldn't read the card.
+0010: The device doesn't respond. Try again.
+0011: Error reading chip.
+0012: Error reading card. Try again.
+0013: Device rejected the transaction.
+0014: Transaction error.
+0015: Transaction internal error.
+0016: Internal server error.
+0017: Couldn't get operation.
+
+------------------------------------------------------------
+
+Processing  codes:
+
+0001: Device connected.
+0002: Connect your e105.
+0003: Configuring device, don't disconnect.
+0004: Device disconnected.
+0005: Configuration finished.
+0006: Configuration cancelled.
+0007: Configuration failed.
+0008: Verifying user.
+0009: Configuration messages (fixed)
+0010: Verifying device.
+0011: Starting pretransaction.
+0012: Error reading chip.
+0013: Card readed.
+0014: Error reading chip. Try with magnetic stripe.
+0015: Card enable command failed.
+0016: ICC enable command failed: message
+0017: Card detect command failed.
+0018: ICC detect command failed: message
+0019: Card with chip, please insert.
+0020: Don't remove the card.
+0021: Failed to send EMV enable command.
+0022: EMV enable command failed: message
+0023: Failed to send smart enable command.
+0024: Smart enable command failed: message
+0025: Failed to send smart detect command.
+0026: Smart detect command failed: message
+0027: Failed to send smart activate command.
+0028: Smart activate command failed: message
+0029: Failed to send Start EMV Transaction command.
+0030: Start EMV Transaction command failed: message
+0031: Failed to send EMV Offline Transaction command.
+0032: Failed to send EMV Online Transaction command.
+0033: Online EMV Online Transaction command failed: message
+
+------------------------------------------------------------
